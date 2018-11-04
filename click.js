@@ -39,10 +39,6 @@ function generate(x0, y0, x1, y1, patternCount, lastDir, count, barLength) {
     ctx.strokeStyle="rgb(" + colorVal + ", " + colorVal + ", " + colorVal + ")";
     ctx.stroke();
 
-    if (count <= 0) {
-        return;
-    }
-
     let dir;
     if (patternCount < patternLength) {
         dir = lastDir;
@@ -61,5 +57,7 @@ function generate(x0, y0, x1, y1, patternCount, lastDir, count, barLength) {
     const x2 = x1 + (barLength + barIncrement) * Math.cos(angle);
     const y2 = y1 + (barLength + barIncrement) * Math.sin(angle);
 
-    setTimeout(generate, 2, x1, y1, x2, y2, patternCount + 1, dir, count - 1, barLength + barIncrement);
+    if (count > 1) {
+        setTimeout(generate, 2, x1, y1, x2, y2, patternCount + 1, dir, count - 1, barLength + barIncrement);
+    }
 }
