@@ -20,7 +20,7 @@ function handleClick() {
     createClickDesign(mouseX, mouseY);
 }
 
-var degree = 3, density = 10, initialBarLength = 1, barIncrement = 0.02, radius = 1000, patternLength = 1;
+var degree = 20, density = 1, initialBarLength = 1, barIncrement = 0.03, radius = 1000, patternLength = 1, turnLimit = Math.PI;
 
 function createClickDesign(mouseX, mouseY) {
     for (let i = 0; i < density; i++) {
@@ -35,7 +35,7 @@ function generate(x0, y0, x1, y1, patternCount, lastDir, count, barLength) {
     ctx.beginPath();
     ctx.moveTo(x0, y0);
     ctx.lineTo(x1, y1);
-    const colorVal = 255 - count/radius*initialBarLength*255;
+    const colorVal = count/radius*initialBarLength*255;
     ctx.strokeStyle="rgb(" + colorVal + ", " + colorVal + ", " + colorVal + ")";
     ctx.stroke();
 
@@ -44,7 +44,6 @@ function generate(x0, y0, x1, y1, patternCount, lastDir, count, barLength) {
     }
 
     let dir;
-
     if (patternCount < patternLength) {
         dir = lastDir;
     } else {
@@ -53,7 +52,7 @@ function generate(x0, y0, x1, y1, patternCount, lastDir, count, barLength) {
     }
 
     let angle = Math.atan2(y1 - y0, x1 - x0);
-    const angleDelta = Math.random() * Math.PI;
+    const angleDelta = Math.random() * turnLimit;
     if (dir == 1) {
         angle += angleDelta;
     } else {
@@ -62,5 +61,5 @@ function generate(x0, y0, x1, y1, patternCount, lastDir, count, barLength) {
     const x2 = x1 + (barLength + barIncrement) * Math.cos(angle);
     const y2 = y1 + (barLength + barIncrement) * Math.sin(angle);
 
-    generate(x1, y1, x2, y2, patternCount + 1, dir, count - 1, barLength + barIncrement);
+    setTimeout(generate, 2, x1, y1, x2, y2, patternCount + 1, dir, count - 1, barLength + barIncrement);
 }
