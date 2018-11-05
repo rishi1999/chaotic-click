@@ -1,18 +1,29 @@
 "use strict";
-var canvas = document.createElement('canvas');
-canvas.width = document.body.clientWidth;
-canvas.height = document.body.clientHeight;
-canvas.style.position = "absolute";
-document.body.appendChild(canvas);
-var ctx = canvas.getContext("2d");
-canvas.addEventListener('click', handleClick);
-
+var layers = new Array();
+var layerContexts = new Array();
 var drawings = new Array();
 var readyToFade = new Array();
 
-/* TODO make it so that it's a different canvas for each click so that you can clear it when calling fadeOut() */
+function initializeCanvas() {
+    var canvas = document.createElement('canvas');
+    canvas.width = document.body.clientWidth;
+    canvas.height = document.body.clientHeight;
+    canvas.style.position = "absolute";
+    document.body.appendChild(canvas);
+    var ctx = canvas.getContext("2d");
+    canvas.addEventListener('click', handleClick, {once: true});
+
+    layers.push(canvas);
+    layerContexts.push(ctx);
+}
+
+initializeCanvas();
 
 function handleClick() {
+    initializeCanvas();
+
+    const canvas = layers[drawings.length];
+
     let mouseX;
     let mouseY;
     const bounds = canvas.getBoundingClientRect();
@@ -39,26 +50,26 @@ function createClickDesign(clickNumber, mouseX, mouseY) {
 }
 
 function generate(clickNumber, x0, y0, x1, y1, patternCount, lastDir, count, barLength) {
-    ctx.beginPath();
-    ctx.moveTo(x0, y0);
-    ctx.lineTo(x1, y1);
+    layerContexts[clickNumber].beginPath();
+    layerContexts[clickNumber].moveTo(x0, y0);
+    layerContexts[clickNumber].lineTo(x1, y1);
     const colorVal = count / radius * initialBarLength * 255;
-    ctx.strokeStyle="rgb(" + colorVal + ", " + colorVal + ", " + colorVal + ")";
+    layerContexts[clickNumber].strokeStyle="rgb(" + colorVal + ", " + 0 + ", " + 0 + ")";
     const path = {
         x0: x0,
         y0: y0,
         x1: x1,
         y1: y1,
-        strokeColor: ctx.strokeStyle
+        strokeColor: layerContexts[clickNumber].strokeStyle
     };
     drawings[clickNumber].push(path);
-    ctx.globalAlpha = 1;
-    ctx.stroke();
+    layerContexts[clickNumber].globalAlpha = 1;
+    layerContexts[clickNumber].stroke();
 
     if (count <= 1) {
         readyToFade[clickNumber]++;
         if (readyToFade[clickNumber] == density * degree) {
-            fadeOut(clickNumber, 0.9);
+            fadeOut(clickNumber, 0.98);
         }
     } else {
         let dir;
@@ -85,16 +96,17 @@ function generate(clickNumber, x0, y0, x1, y1, patternCount, lastDir, count, bar
 
 function fadeOut(clickNumber, alpha) {
     const drawing = drawings[clickNumber];
+    layerContexts[clickNumber].clearRect(0, 0, layers[clickNumber].width, layers[clickNumber].height);
     for (let j = 0; j < drawing.length; j++) {
         let path = drawing[j];
-        ctx.beginPath();
-        ctx.moveTo(path.x0, path.y0);
-        ctx.lineTo(path.x1, path.y1);
-        ctx.strokeStyle = path.strokeColor;
-        ctx.globalAlpha = i;
-        ctx.stroke();
+        layerContexts[clickNumber].beginPath();
+        layerContexts[clickNumber].moveTo(path.x0, path.y0);
+        layerContexts[clickNumber].lineTo(path.x1, path.y1);
+        layerContexts[clickNumber].strokeStyle = path.strokeColor;
+        layerContexts[clickNumber].globalAlpha = Math.max(0, alpha);
+        layerContexts[clickNumber].stroke();
     }
-    if (alpha > 0.0) {
-        setTimeout(fadeOut, 500, clickNumber, alpha - 0.1);
+    if (alpha > 0) {
+        setTimeout(fadeOut, 40, clickNumber, alpha - 0.02);
     }
 }
