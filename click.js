@@ -9,9 +9,10 @@ function initializeCanvas() {
     canvas.width = document.body.clientWidth;
     canvas.height = document.body.clientHeight;
     canvas.style.position = "absolute";
+    canvas.style.zIndex = 10000;
     document.body.appendChild(canvas);
     var ctx = canvas.getContext("2d");
-    canvas.addEventListener('click', handleClick, {once: true});
+    canvas.addEventListener('click', handleClick, true, {once: true});
 
     layers.push(canvas);
     layerContexts.push(ctx);
