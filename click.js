@@ -1,14 +1,16 @@
 "use strict";
-var layers = new Array();
-var layerContexts = new Array();
-var drawings = new Array();
-var readyToFade = new Array();
+var layers = [];
+var layerContexts = [];
+var drawings = [];
+var readyToFade = [];
 
 function initializeCanvas() {
     var canvas = document.createElement('canvas');
     canvas.width = document.body.clientWidth;
     canvas.height = document.body.clientHeight;
     canvas.style.position = "absolute";
+    canvas.style.left = 0;
+    canvas.style.top = 0;
     canvas.style.zIndex = 10000;
     document.body.appendChild(canvas);
     var ctx = canvas.getContext("2d");
@@ -55,7 +57,7 @@ function generate(clickNumber, x0, y0, x1, y1, patternCount, lastDir, count, bar
     layerContexts[clickNumber].moveTo(x0, y0);
     layerContexts[clickNumber].lineTo(x1, y1);
     const colorVal = count / radius * initialBarLength * 255;
-    layerContexts[clickNumber].strokeStyle="rgb(" + colorVal + ", " + 0 + ", " + 0 + ")";
+    layerContexts[clickNumber].strokeStyle="rgb(" + (255 - colorVal) + ", " + (255 - colorVal) + ", " + (255 - colorVal) + ")";
     const path = {
         x0: x0,
         y0: y0,
