@@ -40,7 +40,12 @@ function handleClick() {
     createClickDesign(drawings.length, mouseX, mouseY);
 }
 
+
+
+/* EDIT THESE VALUES TO GENERATE NEW DESIGNS */
 var degree = 20, density = 1, initialBarLength = 1, barIncrement = 0.03, radius = 1000, patternLength = 1, turnLimit = Math.PI;
+
+
 
 function createClickDesign(clickNumber, mouseX, mouseY) {
     drawings.push(new Array());
