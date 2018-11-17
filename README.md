@@ -2,7 +2,7 @@
 
 ### Setup
 
-Create a new bookmark in your favorite web browser. Copy all the code from click.js and paste it into the URL field of the new bookmark you are creating.
+Create a new bookmark in your favorite web browser. In the URL field, type `javascript: `, and then copy all the code from click.js and paste it after that.
 
 ### Usage
 
