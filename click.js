@@ -52,7 +52,7 @@ function createClickDesign(clickNumber, mouseX, mouseY) {
     readyToFade[clickNumber] = 0;
     for (let i = 0; i < density; i++) {
         for (let j = 0; j < degree; j++) {
-            generate(clickNumber, mouseX, mouseY, mouseX + Math.cos(i*2*Math.PI/degree) * initialBarLength, mouseY + Math.sin(i*2*Math.PI/degree) * initialBarLength, 0, Math.floor(Math.random() * 2 + 1), Math.floor(radius / initialBarLength), initialBarLength);
+            generate(clickNumber, mouseX, mouseY, mouseX + Math.cos(j*2*Math.PI/degree) * initialBarLength, mouseY + Math.sin(j*2*Math.PI/degree) * initialBarLength, 0, Math.floor(Math.random() * 2 + 1), Math.floor(radius / initialBarLength), initialBarLength);
         }
     }
 }
