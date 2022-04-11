@@ -45,13 +45,13 @@ function handleClick() {
 
 /* EDIT THESE VALUES TO GENERATE NEW TYPES OF DESIGNS */
 
-var degree = 20;           // number of initial bars spawned for each tree
-var density = 1;           // number of trees spawned at click site
-var initialBarLength = 1;  // length of initial bars
-var barIncrement = 0.03;   // increase in length of successive bars
-var radius = 1000;         // radius of paths in pixels
-var patternLength = 1;     // number of bars for which each new path direction is repeated
-var turnLimit = Math.PI;   // maximum rotation amount for successive bars in degrees
+var degree = 20;           /* number of initial bars spawned for each tree */
+var density = 1;           /* number of trees spawned at click site */
+var initialBarLength = 1;  /* length of initial bars */
+var barIncrement = 0.03;   /* increase in length of successive bars */
+var radius = 1000;         /* radius of paths in pixels */
+var patternLength = 1;     /* number of bars for which each new path direction is repeated */
+var turnLimit = Math.PI;   /* maximum rotation amount for successive bars in degrees */
 
 
 
